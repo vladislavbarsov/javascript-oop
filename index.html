@@ -4,7 +4,56 @@
 <style></style>
 </head>
 <body>
-<script></script>
-  test
+
+
+<script>
+  "use strict";
+  function Car(maxSpeed){
+    var fuelAmount = 0;
+    var CAPACITY = 500;
+
+    this.setFuelAmount = function(amount){
+      if (amount > CAPACITY){
+      throw new Error("Thanks, I am not thirsty");
+      }
+      fuelAmount = amount;
+    }
+    this.getFuelAmount = function(){
+      return fuelAmount;
+    }
+
+    var self = this;
+    console.log("New Car created with max speed: " + maxSpeed);
+    function onRouteEnd(){ //is a private function and wont be called right away
+      console.log("Your car has arrived!");
+    }
+
+    function isEnoughtFuel (distance){
+      return fuelAmount > distance / 10;
+    }
+
+    function travelTime(distance){
+      return distance *1000 / maxSpeed;
+    }
+
+    this.startMove = function(distance){ //is a public class that can be called any time
+      if (isEnoughtFuel(distance)) {
+        setTimeout(onRouteEnd, travelTime(distance))
+      } else {
+        console.log("Not Enought Fuel");
+      }
+    }
+  }
+
+  var car = new Car(120); //120 km/h
+  car.setFuelAmount(200) //50l
+  car.startMove(1000);
+
+  var car2 = new Car(200);
+  car.setFuelAmount(600);
+  car.startMove(1000);
+
+</script>
+
 </body>
 </html>
